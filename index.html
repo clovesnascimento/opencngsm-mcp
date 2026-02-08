@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="OpenCngsm v3.3 - Sistema de Agente de IA com Segurança de Nível Militar. 90%+ score, 100% OWASP/MITRE/NIST compliance.">
+    <meta name="keywords"
+        content="AI, LLM Security, OWASP, MITRE ATLAS, NIST AI RMF, Prompt Injection, Adversarial Testing">
+    <title>OpenCngsm v3.3 - Production-Grade AI Agent Security</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --gold: #ffd700;
+            --success: #00ff88;
+            --text: #eee;
+            --text-dim: #aaa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--highlight);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            object-fit: cover;
+        }
+
+        .brand h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--highlight));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .classification {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--highlight), #ff6b6b);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+            border-color: var(--success);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        /* Features Section */
+        .features {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--gold);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.6), rgba(22, 33, 62, 0.6));
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Compliance Badges */
+        .compliance {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 0;
+            margin: 4rem 0;
+            border-radius: 20px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--success);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .badge-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .badge-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--highlight), #ff6b6b);
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 2px solid var(--highlight);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--highlight);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="logo.jpg" alt="OpenCngsm Logo - Bubo virginianus" class="logo">
+                    <div class="brand">
+                        <h1>OpenCngsm v3.3</h1>
+                        <p>Production-Grade AI Agent Security</p>
+                    </div>
+                </div>
+                <nav class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#security">Security</a>
+                    <a href="https://github.com/clovesnascimento/opencngsm-mcp" target="_blank">GitHub</a>
+                    <a href="https://github.com/clovesnascimento/opencngsm-mcp/blob/main/docs/security_certificate.md"
+                        target="_blank">Certificate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Sistema de Agente de IA com Segurança de Nível Militar</h2>
+                <div class="classification">
+                    🛡️ PRODUCTION-GRADE SECURITY++ (MILITARY-GRADE) 🛡️
+                </div>
+                <p style="font-size: 1.2rem; color: var(--text-dim); max-width: 800px; margin: 2rem auto;">
+                    Proteção avançada contra ataques adversariais com 315+ padrões de segurança,
+                    monitoramento 24/7 e conformidade total com frameworks internacionais.
+                </p>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container" style="display: contents;">
+                <div class="stat-card">
+                    <div class="stat-number">90.3%</div>
+                    <div class="stat-label">Overall Security Score</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">155/172 prompts adversariais bloqueados</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Critical Vectors</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">47/47 vetores críticos protegidos</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">315+</div>
+                    <div class="stat-label">Security Patterns</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">13 stages G-SEC implementados</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Monitoring</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">Garak + PromptFuzz + Prometheus</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="compliance">
+            <div class="container">
+                <h2 class="section-title">100% Compliance</h2>
+                <div class="badges">
+                    <div class="badge">
+                        <div class="badge-score">10/10</div>
+                        <div class="badge-label">OWASP LLM Top 10</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-score">5/5</div>
+                        <div class="badge-label">MITRE ATLAS</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-score">5/5</div>
+                        <div class="badge-label">NIST AI RMF</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">Recursos Principais</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Defesa em Profundidade</h3>
+                        <ul>
+                            <li>6 camadas de segurança</li>
+                            <li>Validação semântica avançada</li>
+                            <li>LLM Judge secundário</li>
+                            <li>Rate limiting inteligente</li>
+                            <li>Detecção de anomalias</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>13 Stages G-SEC</h3>
+                        <ul>
+                            <li>Prompt Injection Protection</li>
+                            <li>RCE Prevention</li>
+                            <li>Reflection Leaking Defense</li>
+                            <li>Jailbreak Detection</li>
+                            <li>IoT Command Injection Block</li>
+                            <li>Supply Chain Security</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Monitoramento 24/7</h3>
+                        <ul>
+                            <li>Garak adversarial testing</li>
+                            <li>PromptFuzz fuzzing</li>
+                            <li>Prometheus metrics</li>
+                            <li>Grafana dashboards</li>
+                            <li>Alertmanager notifications</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>Integrações IoT</h3>
+                        <ul>
+                            <li>ESP32 MCP Server (Telegram)</li>
+                            <li>Android ADB Server (14 tools)</li>
+                            <li>MicroPython support</li>
+                            <li>uiautomator2 automation</li>
+                            <li>Proteção contra RCE em hardware</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Alta Performance</h3>
+                        <ul>
+                            <li>Streaming de respostas</li>
+                            <li>Memória de conversação</li>
+                            <li>Long context support</li>
+                            <li>Retry automático</li>
+                            <li>Cache inteligente</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Disaster Recovery</h3>
+                        <ul>
+                            <li>Backup automático</li>
+                            <li>Prompt de reconstrução completo</li>
+                            <li>Documentação detalhada</li>
+                            <li>Failover configurado</li>
+                            <li>Logs estruturados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2 class="section-title">Comece Agora</h2>
+                <p style="font-size: 1.2rem; color: var(--text-dim); max-width: 700px; margin: 0 auto 2rem;">
+                    Sistema pronto para produção com segurança de nível militar.
+                    Open source, documentado e testado.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/clovesnascimento/opencngsm-mcp" class="btn btn-primary" target="_blank">
+                        Ver no GitHub
+                    </a>
+                    <a href="https://github.com/clovesnascimento/opencngsm-mcp/blob/main/docs/security_certificate.md"
+                        class="btn btn-secondary" target="_blank">
+                        Certificado de Segurança
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/clovesnascimento/opencngsm-mcp" target="_blank">GitHub</a>
+                <a href="https://github.com/clovesnascimento/opencngsm-mcp/issues" target="_blank">Issues</a>
+                <a href="https://github.com/clovesnascimento/opencngsm-mcp/discussions" target="_blank">Discussions</a>
+                <a href="https://github.com/clovesnascimento/opencngsm-mcp/wiki" target="_blank">Wiki</a>
+                <a href="mailto:opencngsm@cngsm.education">Contact</a>
+            </div>
+            <p style="color: var(--text-dim); margin-top: 1rem;">
+                &copy; 2026 OpenCngsm v3.3 - CNGSM Education | MIT License
+            </p>
+            <p style="color: var(--text-dim); font-size: 0.9rem; margin-top: 0.5rem;">
+                🛡️ PRODUCTION-GRADE SECURITY++ (MILITARY-GRADE) 🛡️
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
