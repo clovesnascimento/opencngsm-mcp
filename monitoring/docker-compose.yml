@@ -1,0 +1,103 @@
+# G-SEC Continuous Adversarial Monitoring Stack
+version: "3.9"
+
+services:
+  # Garak Adversarial Testing Runner
+  garak-runner:
+    image: leondz/garak:latest
+    container_name: garak-adversarial
+    volumes:
+      - ./garak_reports:/app/reports
+      - ../tests/security/garak_probes:/app/probes
+    environment:
+      - GARAK_MODEL_TYPE=openai
+      - GARAK_MODEL_NAME=${AGENT_ENDPOINT:-http://host.docker.internal:8000/v1}
+      - GARAK_REPORT_PREFIX=gsec_adversarial_
+    command: >
+      --model_type openai --model_name ${AGENT_ENDPOINT:-http://host.docker.internal:8000/v1} --probes gsec_judge_bypass gsec_config_modification gsec_prompt_leaking gsec_supply_chain_poisoning gsec_rce_protection gsec_reflection_leak gsec_jailbreak --report_prefix gsec_adversarial_ --report_format json
+    restart: unless-stopped
+    networks:
+      - gsec-monitoring
+
+  # PromptFuzz Mutation Testing
+  promptfuzz-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.promptfuzz
+    container_name: promptfuzz-adversarial
+    volumes:
+      - ./promptfuzz_reports:/app/reports
+      - ./promptfuzz_seeds:/app/seeds
+    environment:
+      - TARGET_URL=${AGENT_ENDPOINT:-http://host.docker.internal:8000/v1/chat/completions}
+      - ITERATIONS=5000
+      - MUTATION_LEVEL=high
+    restart: unless-stopped
+    networks:
+      - gsec-monitoring
+
+  # Prometheus Metrics Collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+    networks:
+      - gsec-monitoring
+
+  # Grafana Dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana-provisioning:/etc/grafana/provisioning
+      - ./grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    restart: unless-stopped
+    networks:
+      - gsec-monitoring
+
+  # Alertmanager for Security Alerts
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    restart: unless-stopped
+    networks:
+      - gsec-monitoring
+
+  # Metrics Exporter (custom)
+  gsec-exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile.exporter
+    container_name: gsec-exporter
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./garak_reports:/app/reports
+      - ./promptfuzz_reports:/app/promptfuzz_reports
+    environment:
+      - REPORT_DIR=/app/reports
+      - PROMPTFUZZ_DIR=/app/promptfuzz_reports
+    restart: unless-stopped
+    networks:
+      - gsec-monitoring
+
+networks:
+  gsec-monitoring:
+    driver: bridge

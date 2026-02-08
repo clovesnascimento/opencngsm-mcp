@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+RUN pip install --no-cache-dir prometheus-client flask
+
+# Copy exporter script
+COPY gsec_metrics_exporter.py /app/
+
+# Expose metrics port
+EXPOSE 8080
+
+# Run exporter
+CMD ["python", "gsec_metrics_exporter.py"]

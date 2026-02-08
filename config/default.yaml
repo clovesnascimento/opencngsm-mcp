@@ -1,0 +1,37 @@
+# OpenClaw MCP - Configuração Padrão
+
+system:
+  name: "OpenClaw MCP"
+  version: "1.0.0"
+  environment: "development"
+
+gateway:
+  host: "127.0.0.1"
+  port: 18789
+  cors_origins: ["*"]
+  rate_limit: 60  # requests per minute
+
+security:
+  jwt_secret: "change-this-in-production"
+  token_expiration: 86400  # 24 hours in seconds
+
+planner:
+  max_tasks_per_plan: 10
+  default_timeout: 300  # seconds
+
+decision_engine:
+  default_provider: "openrouter"
+  fallback_enabled: true
+
+memory:
+  storage_path: "storage/memory"
+  max_short_term_items: 100
+  embedding_model: "mock"
+
+skills:
+  manifest_path: "skills/skill_manifest.json"
+  auto_load: true
+
+logging:
+  level: "INFO"
+  file: "storage/logs/openclaw.log"

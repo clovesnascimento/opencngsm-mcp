@@ -1,0 +1,16 @@
+{
+    "name": "opencngsm-whatsapp-baileys",
+    "version": "3.0.0",
+    "description": "Baileys WhatsApp server for OpenCngsm",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "@whiskeysockets/baileys": "^6.5.0",
+        "qrcode-terminal": "^0.12.0",
+        "pino": "^8.16.0",
+        "express": "^4.18.2",
+        "multer": "^1.4.5-lts.1"
+    }
+}

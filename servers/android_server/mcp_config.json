@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "android-adb": {
+            "command": "python",
+            "args": [
+                "servers/android_server/android_server.py"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    }
+}

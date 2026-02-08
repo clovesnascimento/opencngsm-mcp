@@ -1,0 +1,43 @@
+# OpenCngsm Agent - Dockerfile
+# Isolated container for non-main sessions (groups/channels)
+
+FROM python:3.11-slim
+
+LABEL maintainer="OpenCngsm Team"
+LABEL description="OpenCngsm Agent Container for Session Sandboxing"
+
+# Create non-root user
+RUN useradd -m -u 1000 -s /bin/bash agentuser
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY core/ /app/core/
+COPY skills/ /app/skills/
+
+# Create workspace directory
+RUN mkdir -p /workspace && chown -R agentuser:agentuser /workspace
+
+# Switch to non-root user
+USER agentuser
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV WORKSPACE=/workspace
+
+# Working directory for agent
+WORKDIR /workspace
+
+# Entry point
+CMD ["python", "-m", "core.agent.runner"]

@@ -1,0 +1,14 @@
+# OpenClaw MCP - Version Info
+
+VERSION=2.0.0
+BUILD_DATE=2026-02-05
+STATUS=production-ready
+
+# Changelog v2.0.0
+- Fixed: Rust dependency removed (Pydantic v1.10.12)
+- Fixed: PyJWT added for JWT support
+- Fixed: Compatible versions (FastAPI 0.88.0, Uvicorn 0.20.0)
+- Added: Complete configuration guides
+- Added: Startup scripts (start_all.bat/sh)
+- Added: Comprehensive documentation
+- Tested: Windows, Linux, Mac compatibility

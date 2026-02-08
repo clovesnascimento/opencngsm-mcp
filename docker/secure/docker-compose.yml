@@ -1,0 +1,54 @@
+
+version: '3.8'
+
+services:
+  opencngsm-secure:
+    image: opencngsm:v3.3-secure
+    container_name: opencngsm-secure
+    
+    # NETWORK ISOLATION - Sem acesso à rede
+    network_mode: none
+    
+    # FILESYSTEM - Read-only com tmpfs para /tmp
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=100m
+    
+    # RESOURCE LIMITS
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # SECURITY OPTIONS
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=default
+      - apparmor=docker-default
+    
+    # CAPABILITIES - Drop all
+    cap_drop:
+      - ALL
+    
+    # USER - Run as non-root
+    user: "1000:1000"
+    
+    # PIDS LIMIT
+    pids_limit: 50
+    
+    # ENVIRONMENT
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENCNGSM_SECURE_MODE=true
+    
+    # VOLUMES - Apenas read-only
+    volumes:
+      - ./config:/app/config:ro
+      - ./skills:/app/skills:ro
+    
+    # RESTART POLICY
+    restart: unless-stopped

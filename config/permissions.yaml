@@ -1,0 +1,36 @@
+# OpenClaw MCP - Permissões
+
+# Permissões padrão para novos usuários
+default_permissions:
+  file_read: ask      # allow, deny, ask
+  file_write: ask
+  file_delete: deny
+  bash_execute: ask
+  ia_api: allow
+  external_api: ask
+
+# Permissões por usuário (Telegram User ID ou identificador)
+user_permissions:
+  "admin":
+    file_read: allow
+    file_write: allow
+    file_delete: ask
+    bash_execute: allow
+    ia_api: allow
+    external_api: allow
+  
+  "guest":
+    file_read: allow
+    file_write: deny
+    file_delete: deny
+    bash_execute: deny
+    ia_api: allow
+    external_api: deny
+
+# Skills que requerem aprovação explícita
+require_approval:
+  - delete_file
+  - execute_command
+
+# Skills bloqueadas globalmente
+blocked_skills: []

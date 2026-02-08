@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "esp32-telegram": {
+            "command": "python",
+            "args": [
+                "servers/esp32_server/esp32_server.py"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    }
+}

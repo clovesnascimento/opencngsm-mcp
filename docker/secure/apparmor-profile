@@ -1,0 +1,24 @@
+
+#include <tunables/global>
+
+profile opencngsm-secure flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/python>
+
+  # Deny network access
+  deny network,
+
+  # Allow read access to application files
+  /app/** r,
+  /app/config/** r,
+  /app/skills/** r,
+
+  # Allow write only to /tmp
+  /tmp/** rw,
+
+  # Deny everything else
+  deny /** w,
+  deny /proc/** w,
+  deny /sys/** w,
+  deny /dev/** w,
+}

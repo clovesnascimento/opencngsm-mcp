@@ -1,0 +1,58 @@
+fastapi==0.88.0
+uvicorn==0.20.0
+pydantic==1.10.12
+PyJWT==2.8.0
+python-multipart==0.0.5
+aiofiles==23.1.0
+
+# v3.0 Dependencies
+websockets==12.0
+docker==7.0.0
+click==8.1.7
+tabulate==0.9.0
+PyYAML==6.0.1
+
+# Skills Dependencies
+# Telegram Skill
+python-telegram-bot==20.7
+
+# Email Skill (stdlib - no deps needed)
+
+# PIX Skill
+qrcode==7.4.2
+Pillow==10.1.0
+
+# Web Scraping Skill
+beautifulsoup4==4.12.2
+selenium==4.15.2
+requests==2.31.0
+lxml==4.9.3
+
+# Google Drive Skill
+google-api-python-client==2.108.0
+google-auth-oauthlib==1.1.0
+
+# Storage Skill (stdlib - no deps needed)
+
+# Voice Skill
+# Voxtral (Mistral AI STT)
+mistralai[realtime]==1.2.0
+
+# Kokoro TTS
+torch==2.1.0
+torchaudio==2.1.0
+transformers==4.36.0
+
+# Audio I/O
+pyaudio==0.2.14
+sounddevice==0.4.6
+soundfile==0.12.1
+
+# Calendar Skill
+# (uses google-api-python-client already listed)
+
+# WhatsApp Skill
+aiohttp==3.9.1
+
+# Docker Sandbox
+# (uses docker==7.0.0 already listed)

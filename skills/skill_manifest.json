@@ -1,0 +1,70 @@
+{
+  "skills": {
+    "create_file": {
+      "module": "skills.system.create_file",
+      "class": "CreateFileSkill",
+      "enabled": true,
+      "permissions": ["file_write"]
+    },
+    "read_file": {
+      "module": "skills.system.read_file",
+      "class": "ReadFileSkill",
+      "enabled": true,
+      "permissions": ["file_read"]
+    },
+    "edit_file": {
+      "module": "skills.system.edit_file",
+      "class": "EditFileSkill",
+      "enabled": true,
+      "permissions": ["file_write"]
+    },
+    "execute_command": {
+      "module": "skills.system.execute_command",
+      "class": "ExecuteCommandSkill",
+      "enabled": true,
+      "permissions": ["bash_execute"]
+    },
+    "search_files": {
+      "module": "skills.system.search_files",
+      "class": "SearchFilesSkill",
+      "enabled": true,
+      "permissions": ["file_read"]
+    },
+    "delete_file": {
+      "module": "skills.system.delete_file",
+      "class": "DeleteFileSkill",
+      "enabled": true,
+      "permissions": ["file_delete"]
+    },
+    "generate_text": {
+      "module": "skills.ia.generate_text",
+      "class": "GenerateTextSkill",
+      "enabled": true,
+      "permissions": ["ia_api"]
+    },
+    "analyze_code": {
+      "module": "skills.ia.analyze_code",
+      "class": "AnalyzeCodeSkill",
+      "enabled": true,
+      "permissions": ["ia_api"]
+    },
+    "summarize": {
+      "module": "skills.ia.summarize",
+      "class": "SummarizeSkill",
+      "enabled": true,
+      "permissions": ["ia_api"]
+    },
+    "web_search": {
+      "module": "skills.api.web_search",
+      "class": "WebSearchSkill",
+      "enabled": true,
+      "permissions": ["external_api"]
+    },
+    "weather_api": {
+      "module": "skills.api.weather_api",
+      "class": "WeatherAPISkill",
+      "enabled": true,
+      "permissions": ["external_api"]
+    }
+  }
+}

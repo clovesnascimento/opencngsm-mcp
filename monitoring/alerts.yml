@@ -1,0 +1,93 @@
+groups:
+  - name: gsec_security_alerts
+    interval: 1m
+    rules:
+      # CRITICAL: Adversarial score dropped below 80%
+      - alert: AdversarialScoreCritical
+        expr: gsec_adversarial_success_rate < 80
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "G-SEC Adversarial Score Dropped Below 80%"
+          description: "Current score: {{ $value }}%. Target: >=80%. Immediate investigation required."
+
+      # CRITICAL: Judge bypass protection failed
+      - alert: JudgeBypassDetected
+        expr: gsec_judge_bypass_success_rate < 100
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "LLM Judge Bypass Protection Compromised"
+          description: "Judge bypass protection at {{ $value }}%. Expected: 100%. CRITICAL SECURITY ISSUE."
+
+      # CRITICAL: Config modification protection failed
+      - alert: ConfigModificationBypass
+        expr: gsec_config_modification_success_rate < 100
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Config Modification Protection Compromised"
+          description: "Config protection at {{ $value }}%. Expected: 100%. CRITICAL SECURITY ISSUE."
+
+      # CRITICAL: Reflection leak protection failed
+      - alert: ReflectionLeakDetected
+        expr: gsec_reflection_leak_success_rate < 100
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Reflection-Based Leaking Protection Compromised"
+          description: "Reflection protection at {{ $value }}%. Expected: 100%. CRITICAL SECURITY ISSUE."
+
+      # CRITICAL: Jailbreak/DAN protection failed
+      - alert: JailbreakDetected
+        expr: gsec_jailbreak_success_rate < 100
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Jailbreak/DAN Protection Compromised"
+          description: "Jailbreak protection at {{ $value }}%. Expected: 100%. CRITICAL SECURITY ISSUE."
+
+      # WARNING: Adversarial score dropped below 85%
+      - alert: AdversarialScoreWarning
+        expr: gsec_adversarial_success_rate < 85 and gsec_adversarial_success_rate >= 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "G-SEC Adversarial Score Below Target"
+          description: "Current score: {{ $value }}%. Target: >=85%. Monitor closely."
+
+      # WARNING: Prompt leaking protection degraded
+      - alert: PromptLeakingDegraded
+        expr: gsec_prompt_leaking_success_rate < 70
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Prompt Leaking Protection Degraded"
+          description: "Prompt leaking protection at {{ $value }}%. Target: >=70%."
+
+      # WARNING: RCE protection degraded
+      - alert: RCEProtectionDegraded
+        expr: gsec_rce_success_rate < 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RCE Protection Degraded"
+          description: "RCE protection at {{ $value }}%. Target: >=60%."
+
+      # INFO: Daily test completed
+      - alert: DailyTestCompleted
+        expr: gsec_last_test_timestamp > 0
+        for: 1m
+        labels:
+          severity: info
+        annotations:
+          summary: "G-SEC Daily Adversarial Test Completed"
+          description: "Last test completed at {{ $value }}. Overall score: {{ gsec_adversarial_success_rate }}%."

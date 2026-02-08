@@ -1,0 +1,13 @@
+{
+  "gateway": {
+    "host": "127.0.0.1",
+    "port": 18789
+  },
+  "auth": {
+    "secret_key": "opencngsm_jwt_secret_2024",
+    "token_expiry_hours": 24
+  },
+  "telegram": {
+    "token": "YOUR_TELEGRAM_BOT_TOKEN"
+  }
+}

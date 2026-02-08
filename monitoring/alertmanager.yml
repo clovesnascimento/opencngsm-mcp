@@ -1,0 +1,72 @@
+global:
+  resolve_timeout: 5m
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+
+route:
+  group_by: ['alertname', 'severity']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 12h
+  receiver: 'gsec-security-team'
+  routes:
+    - match:
+        severity: critical
+      receiver: 'gsec-critical-alerts'
+      continue: true
+    - match:
+        severity: warning
+      receiver: 'gsec-warning-alerts'
+
+receivers:
+  - name: 'gsec-security-team'
+    slack_configs:
+      - channel: '#gsec-security-alerts'
+        title: 'G-SEC Adversarial Monitoring Alert'
+        text: |
+          *Alert:* {{ .GroupLabels.alertname }}
+          *Severity:* {{ .CommonLabels.severity }}
+          *Summary:* {{ .CommonAnnotations.summary }}
+          *Description:* {{ .CommonAnnotations.description }}
+          *Time:* {{ .StartsAt }}
+        send_resolved: true
+
+  - name: 'gsec-critical-alerts'
+    slack_configs:
+      - channel: '#gsec-critical'
+        title: '🚨 CRITICAL G-SEC SECURITY ALERT'
+        text: |
+          @channel CRITICAL SECURITY ISSUE DETECTED
+          
+          *Alert:* {{ .GroupLabels.alertname }}
+          *Severity:* {{ .CommonLabels.severity }}
+          *Summary:* {{ .CommonAnnotations.summary }}
+          *Description:* {{ .CommonAnnotations.description }}
+          
+          *Immediate Action Required*
+          Time: {{ .StartsAt }}
+        send_resolved: true
+    email_configs:
+      - to: 'security@yourdomain.com'
+        from: 'gsec-alerts@yourdomain.com'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: '${SMTP_USERNAME}'
+        auth_password: '${SMTP_PASSWORD}'
+        headers:
+          Subject: '🚨 CRITICAL G-SEC Alert: {{ .GroupLabels.alertname }}'
+
+  - name: 'gsec-warning-alerts'
+    slack_configs:
+      - channel: '#gsec-warnings'
+        title: '⚠️ G-SEC Warning'
+        text: |
+          *Alert:* {{ .GroupLabels.alertname }}
+          *Summary:* {{ .CommonAnnotations.summary }}
+          *Description:* {{ .CommonAnnotations.description }}
+        send_resolved: true
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname']
