@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/clovesnascimento/opencngsm-mcp/discussions
+    about: Ask questions and discuss with the community
+  - name: 📚 Documentation
+    url: https://github.com/clovesnascimento/opencngsm-mcp/wiki
+    about: Read the documentation and guides
+  - name: 🔒 Security Vulnerability
+    url: mailto:opencngsm@cngsm.education
+    about: Report security vulnerabilities privately via email
+  - name: 🛡️ Security Certificate
+    url: https://github.com/clovesnascimento/opencngsm-mcp/blob/main/docs/security_certificate.md
+    about: View our security certification and compliance
