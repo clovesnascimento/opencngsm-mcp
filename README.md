@@ -33,7 +33,7 @@ OpenCngsm v3.3 is a **production-ready AI agent system** with **military-grade s
 | **Overall Score** | ✅ 90.3% (155/172) | Adversarial testing |
 | **Critical Vectors** | ✅ 100% (47/47) | Perfect protection |
 
-📜 [View Full Security Certificate](./docs/security_certificate.md)
+📜 [View Full Security Certificate](https://github.com/clovesnascimento/opencngsm-mcp/blob/main/docs/security_certificate.md)
 
 ---
 
@@ -245,6 +245,8 @@ Found a security vulnerability? Please report it responsibly:
 
 **Do not** open public issues for security vulnerabilities.
 
+**Responsible Disclosure:** opencngsm@cngsm.education
+
 ---
 
 ## 🌟 Acknowledgments
@@ -268,17 +270,17 @@ Found a security vulnerability? Please report it responsibly:
 
 ## 💬 Community
 
-- **Discord:** [Join Server](https://discord.gg/opencngsm)
-- **Twitter:** [@OpenCngsm](https://twitter.com/opencngsm)
-- **Discussions:** [GitHub Discussions](https://github.com/YOUR_USERNAME/opencngsm-mcp/discussions)
+- **Discussions:** [GitHub Discussions](https://github.com/clovesnascimento/opencngsm-mcp/discussions)
+- **Email:** opencngsm@cngsm.education
+- **Website:** [cngsm.education](https://cngsm.education)
 
 ---
 
 ## 📞 Support
 
-- **Documentation:** [docs.opencngsm.dev](https://docs.opencngsm.dev)
-- **Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/opencngsm-mcp/issues)
-- **Email:** support@opencngsm.dev
+- **Documentation:** [GitHub Wiki](https://github.com/clovesnascimento/opencngsm-mcp/wiki)
+- **Issues:** [GitHub Issues](https://github.com/clovesnascimento/opencngsm-mcp/issues)
+- **Email:** opencngsm@cngsm.education
 
 ---
 
